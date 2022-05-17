@@ -1,0 +1,68 @@
+@mixin flex($align: null, $justify: null, $direction: null, $wrap: null) {
+  display: flex;
+
+  @if ($direction) {
+    flex-direction: $direction;
+  }
+
+  @if ($align) {
+    align-items: $align;
+  }
+
+  @if ($justify) {
+    justify-content: $justify;
+  }
+
+  @if ($wrap) {
+    flex-wrap: $wrap;
+  }
+}
+
+@mixin padding($pt: null, $pr: null, $pb: null, $pl: null) {
+  @if ($pt and $pb and $pl and $pr) {
+    padding: $pt $pr $pb $pl;
+  } @else {
+    @if ($pt) {
+      padding-top: $pt;
+    }
+
+    @if ($pr) {
+      padding-right: $pr;
+    }
+
+    @if ($pb) {
+      padding-bottom: $pb;
+    }
+
+    @if ($pl) {
+      padding-left: $pl;
+    }
+  }
+}
+
+$breakpoints-up: (
+  "medium": 768px,
+  "large": 992px,
+);
+
+$breakpoints-down: (
+  "small": 767px,
+  "medium": 991px,
+  "large": 1199px,
+);
+
+@mixin breakpoint-up($size) {
+  @if map-has-key($breakpoints-up, $size) {
+    @media (min-width: map-get($breakpoints-up, $size)) {
+      @content;
+    }
+  }
+}
+
+@mixin breakpoint-down($size) {
+  @if map-has-key($breakpoints-down, $size) {
+    @media (max-width: map-get($breakpoints-down, $size)) {
+      @content;
+    }
+  }
+}
